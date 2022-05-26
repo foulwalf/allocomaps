@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "791609153415",
+    "firebase_url": "https://allocomaps-e12ff-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "allocomaps-e12ff",
+    "storage_bucket": "allocomaps-e12ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:791609153415:android:4807ad53762a5b07b9e522",
+        "android_client_info": {
+          "package_name": "com.example.allocomaps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "791609153415-j6qv36gh62pf0f53hftdqbu1gm9mm9u3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.allocomaps",
+            "certificate_hash": "da39a3ee5e6b4b0d3255bfef95601890afd80709"
+          }
+        },
+        {
+          "client_id": "791609153415-elpirk5t0jebolfddudn95ahkra81qbg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaZ0DVRtEIEcNUM_CxuIi6GTHCHKaFQf8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "791609153415-elpirk5t0jebolfddudn95ahkra81qbg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
