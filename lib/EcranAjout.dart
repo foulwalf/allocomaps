@@ -123,7 +123,7 @@ class Screen extends State<EcranAjout> {
               )),
             ),
           ],
-        ));
+        ),);
   }
 
   Widget PhotoDialog(BuildContext context) {
@@ -764,7 +764,8 @@ class Screen extends State<EcranAjout> {
                     (Set<MaterialState> states) {
                       return Colors.orange;
                     },
-                  )),
+                  ),
+                  ),
                 ),
               ),
             ),

@@ -48,7 +48,9 @@ class _Splash extends State<Splash> {
 
 class Home extends StatefulWidget {
   final vendeusesRecherchees;
+
   const Home({Key key, this.vendeusesRecherchees}) : super(key: key);
+
   @override
   HomeState createState() => HomeState();
 }
@@ -71,24 +73,29 @@ class HomeState extends State<Home> {
 
   @override
   void initState() {
+    super.initState();
     // TODO: implement ini
+
     if (widget.vendeusesRecherchees == null) {
       Vendeuse.recupererVendeuses().then((value) {
         setState(() {
           vendeuses = value;
           geo.Geolocator.getCurrentPosition(
-                  desiredAccuracy: geo.LocationAccuracy.best)
-              .then((value) {
-            setState(() {
-              _currentPosition = value;
-            });
+            desiredAccuracy: geo.LocationAccuracy.best,
+          ).then((value) {
+            setState(
+              () {
+                _currentPosition = value;
+              },
+            );
           });
+          print("current position $_currentPosition");
         });
       });
     } else {
       geo.Geolocator.getCurrentPosition(
-              desiredAccuracy: geo.LocationAccuracy.best)
-          .then((value) {
+        desiredAccuracy: geo.LocationAccuracy.best,
+      ).then((value) {
         setState(() {
           vendeuses = widget.vendeusesRecherchees;
           _currentPosition = value;

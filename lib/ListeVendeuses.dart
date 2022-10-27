@@ -10,6 +10,7 @@ class ListeVendeuse extends StatefulWidget {
   final vendeusesRecherchees;
 
   const ListeVendeuse({Key key, this.vendeusesRecherchees}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
@@ -23,6 +24,7 @@ class Liste extends State<ListeVendeuse> {
   bool loading = true;
   bool confirmer = false;
   bool searchOff = true;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -130,8 +132,10 @@ class Liste extends State<ListeVendeuse> {
                 itemExtent: 70,
                 itemBuilder: (context, index) {
                   return new Slidable(
-                    actionPane: SlidableDrawerActionPane(),
-                    actionExtentRatio: 0.25,
+                    startActionPane: ActionPane(
+                      motion: ScrollMotion(),
+                      children: [],
+                    ),
                     child: Container(
                       color: Colors.white,
                       child: ListTile(
@@ -189,12 +193,14 @@ class Liste extends State<ListeVendeuse> {
                         },
                       ),
                     ),
-                    secondaryActions: <Widget>[
-                      IconSlideAction(
-                          caption: 'Modifier',
-                          color: Colors.orange,
-                          icon: Icons.edit,
-                          onTap: () async {
+                    endActionPane: ActionPane(
+                      motion: ScrollMotion(),
+                      children: [
+                        SlidableAction(
+                          // An action can be bigger than the others.
+                          flex: 2,
+                          onPressed: null,
+                          /*() {
                             var resultat = await showDialog(
                                 context: context,
                                 builder: (context) => ConfirmationD(
@@ -210,9 +216,9 @@ class Liste extends State<ListeVendeuse> {
                                             textAlign: TextAlign.center),
                                         content: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                          MainAxisAlignment.center,
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.center,
+                                          CrossAxisAlignment.center,
                                           children: <Widget>[
                                             Container(
                                               width: 50,
@@ -221,8 +227,8 @@ class Liste extends State<ListeVendeuse> {
                                                 strokeWidth: 4,
                                                 backgroundColor: Colors.grey,
                                                 valueColor:
-                                                    AlwaysStoppedAnimation<
-                                                        Color>(Colors.orange),
+                                                AlwaysStoppedAnimation<
+                                                    Color>(Colors.orange),
                                               ),
                                             )
                                           ],
@@ -230,37 +236,37 @@ class Liste extends State<ListeVendeuse> {
                                   },
                                   barrierDismissible: false);
                               bool result =
-                                  await DataConnectionChecker().hasConnection;
+                              await DataConnectionChecker().hasConnection;
                               if (result == true) {
                                 Navigator.of(context).pop();
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => EcranModif(
-                                              id: vendeuses[index].id,
-                                              nomVendeuse: vendeuses[index].nom,
-                                              numeroDeTelephone:
-                                                  vendeuses[index]
-                                                      .numeroDeTelephone,
-                                              adresse: vendeuses[index].adresse,
-                                              photo: vendeuses[index].photo,
-                                              lundi: vendeuses[index].lundi,
-                                              mardi: vendeuses[index].mardi,
-                                              mercredi:
-                                                  vendeuses[index].mercredi,
-                                              jeudi: vendeuses[index].jeudi,
-                                              vendredi:
-                                                  vendeuses[index].vendredi,
-                                              samedi: vendeuses[index].samedi,
-                                              dimanche:
-                                                  vendeuses[index].dimanche,
-                                              latitude:
-                                                  vendeuses[index].latitude,
-                                              longitude:
-                                                  vendeuses[index].longitude,
-                                              localite:
-                                                  vendeuses[index].localite,
-                                            )));
+                                          id: vendeuses[index].id,
+                                          nomVendeuse: vendeuses[index].nom,
+                                          numeroDeTelephone:
+                                          vendeuses[index]
+                                              .numeroDeTelephone,
+                                          adresse: vendeuses[index].adresse,
+                                          photo: vendeuses[index].photo,
+                                          lundi: vendeuses[index].lundi,
+                                          mardi: vendeuses[index].mardi,
+                                          mercredi:
+                                          vendeuses[index].mercredi,
+                                          jeudi: vendeuses[index].jeudi,
+                                          vendredi:
+                                          vendeuses[index].vendredi,
+                                          samedi: vendeuses[index].samedi,
+                                          dimanche:
+                                          vendeuses[index].dimanche,
+                                          latitude:
+                                          vendeuses[index].latitude,
+                                          longitude:
+                                          vendeuses[index].longitude,
+                                          localite:
+                                          vendeuses[index].localite,
+                                        )));
                               } else {
                                 Navigator.of(context).pop();
                                 showDialog(
@@ -272,9 +278,9 @@ class Liste extends State<ListeVendeuse> {
                                               textAlign: TextAlign.center),
                                           content: Column(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                            MainAxisAlignment.start,
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.stretch,
+                                            CrossAxisAlignment.stretch,
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               Icon(Icons.error_outline,
@@ -285,12 +291,12 @@ class Liste extends State<ListeVendeuse> {
                                                 child: Text('Fermer'),
                                                 style: ButtonStyle(
                                                     backgroundColor:
-                                                        MaterialStateProperty
-                                                            .resolveWith<Color>(
-                                                  (Set<MaterialState> states) {
-                                                    return Colors.red;
-                                                  },
-                                                )),
+                                                    MaterialStateProperty
+                                                        .resolveWith<Color>(
+                                                          (Set<MaterialState> states) {
+                                                        return Colors.red;
+                                                      },
+                                                    )),
                                               ),
                                             ],
                                           ));
@@ -298,149 +304,128 @@ class Liste extends State<ListeVendeuse> {
                                     barrierDismissible: false);
                               }
                             }
-                          }),
-                      IconSlideAction(
-                        caption: 'Supprimer',
-                        color: Colors.red,
-                        icon: Icons.delete,
-                        onTap: () async {
-                          var resultat = await showDialog(
-                              context: context,
-                              builder: (context) =>
-                                  ConfirmationD('Supprimer cette vendeuse'),
-                              barrierDismissible: false);
-                          if (resultat) {
-                            showDialog(
+                          }*/
+                          backgroundColor: Colors.orange,
+                          foregroundColor: Colors.white,
+                          icon: Icons.edit,
+                          label: 'Modifier',
+                        ),
+                        SlidableAction(
+                          // An action can be bigger than the others.
+                          flex: 2,
+                          onPressed: null,
+                          /*() async {
+                            var resultat = await showDialog(
                                 context: context,
-                                builder: (context) {
-                                  return new AlertDialog(
-                                      title: Text('Suppression',
-                                          textAlign: TextAlign.center),
-                                      content: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          Container(
-                                            width: 50,
-                                            height: 50,
-                                            child: CircularProgressIndicator(
-                                              strokeWidth: 4,
-                                              backgroundColor: Colors.grey,
-                                              valueColor:
-                                                  AlwaysStoppedAnimation<Color>(
-                                                      Colors.orange),
-                                            ),
-                                          )
-                                        ],
-                                      ));
-                                },
+                                builder: (context) => ConfirmationD(
+                                    'Modifier les informations de cette vendeuse'),
                                 barrierDismissible: false);
-
-                            Vendeuse vendeuse = new Vendeuse(
-                                null,
-                                null,
-                                null,
-                                null,
-                                null,
-                                null,
-                                null,
-                                null,
-                                null,
-                                null,
-                                null,
-                                null,
-                                null);
-                            vendeuse.id = vendeuses[index].id;
-                            vendeuse.photo = vendeuses[index].photo;
-                            var v = await vendeuse.supprimerVendeuse();
-                            var test = await vendeuse.suppImage();
-                            if (!v.exists) {
+                            if (resultat) {
                               showDialog(
                                   context: context,
                                   builder: (context) {
                                     return new AlertDialog(
-                                        title: Text('Vendeuse supprimée',
+                                        title: Text(
+                                            'Vérification de la connexion',
                                             textAlign: TextAlign.center),
-                                        content: Column(
+                                        content: Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                          MainAxisAlignment.center,
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Icon(Icons.check_circle_outline,
-                                                color: Colors.orange, size: 50),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ListeVendeuse()));
-                                              },
-                                              child: Text('Fermer'),
-                                              style: ButtonStyle(
-                                                  backgroundColor:
-                                                      MaterialStateProperty
-                                                          .resolveWith<Color>(
-                                                (Set<MaterialState> states) {
-                                                  return Colors.orange;
-                                                },
-                                              )),
-                                            ),
+                                          CrossAxisAlignment.center,
+                                          children: <Widget>[
+                                            Container(
+                                              width: 50,
+                                              height: 50,
+                                              child: CircularProgressIndicator(
+                                                strokeWidth: 4,
+                                                backgroundColor: Colors.grey,
+                                                valueColor:
+                                                AlwaysStoppedAnimation<
+                                                    Color>(Colors.orange),
+                                              ),
+                                            )
                                           ],
                                         ));
-                                  });
-                            } else {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return new AlertDialog(
-                                        title: Text('Erreur',
-                                            textAlign: TextAlign.center),
-                                        content: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.stretch,
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Text(
-                                              'Une erreur s\'est produite lors de la suppression, veuilez réessayer',
-                                              style:
-                                                  TextStyle(color: Colors.red),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            Icon(Icons.error_outline,
-                                                color: Colors.red, size: 50),
-                                            ElevatedButton(
-                                              onPressed: () {
-                                                Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            ListeVendeuse()));
-                                              },
-                                              child: Text('Fermer'),
-                                              style: ButtonStyle(
-                                                  backgroundColor:
-                                                      MaterialStateProperty
-                                                          .resolveWith<Color>(
-                                                (Set<MaterialState> states) {
-                                                  return Colors.red;
-                                                },
-                                              )),
-                                            ),
-                                          ],
-                                        ));
-                                  });
+                                  },
+                                  barrierDismissible: false);
+                              bool result =
+                              await DataConnectionChecker().hasConnection;
+                              if (result == true) {
+                                Navigator.of(context).pop();
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => EcranModif(
+                                          id: vendeuses[index].id,
+                                          nomVendeuse: vendeuses[index].nom,
+                                          numeroDeTelephone:
+                                          vendeuses[index]
+                                              .numeroDeTelephone,
+                                          adresse: vendeuses[index].adresse,
+                                          photo: vendeuses[index].photo,
+                                          lundi: vendeuses[index].lundi,
+                                          mardi: vendeuses[index].mardi,
+                                          mercredi:
+                                          vendeuses[index].mercredi,
+                                          jeudi: vendeuses[index].jeudi,
+                                          vendredi:
+                                          vendeuses[index].vendredi,
+                                          samedi: vendeuses[index].samedi,
+                                          dimanche:
+                                          vendeuses[index].dimanche,
+                                          latitude:
+                                          vendeuses[index].latitude,
+                                          longitude:
+                                          vendeuses[index].longitude,
+                                          localite:
+                                          vendeuses[index].localite,
+                                        )));
+                              } else {
+                                Navigator.of(context).pop();
+                                showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return new AlertDialog(
+                                          title: Text(
+                                              'Aucune connexion internet',
+                                              textAlign: TextAlign.center),
+                                          content: Column(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.stretch,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Icon(Icons.error_outline,
+                                                  color: Colors.red, size: 50),
+                                              ElevatedButton(
+                                                onPressed: () =>
+                                                    Navigator.of(context).pop(),
+                                                child: Text('Fermer'),
+                                                style: ButtonStyle(
+                                                    backgroundColor:
+                                                    MaterialStateProperty
+                                                        .resolveWith<Color>(
+                                                          (Set<MaterialState> states) {
+                                                        return Colors.red;
+                                                      },
+                                                    )),
+                                              ),
+                                            ],
+                                          ));
+                                    },
+                                    barrierDismissible: false);
+                              }
                             }
-                          }
-                        },
-                      ),
-                    ],
+                          }*/
+                          backgroundColor: Colors.red,
+                          foregroundColor: Colors.white,
+                          icon: Icons.delete,
+                          label: 'Supprimer',
+                        ),
+                      ],
+                    ),
                   );
                 },
               )
